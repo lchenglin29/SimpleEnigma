@@ -1,10 +1,9 @@
 import random
 import json
 
-WELCOME_MSG = """Enigma made by Koala
-
+WELCOME_MSG = """\033[46mEnigma made by Koala\033[0m
 Project note:
-- If want to leave, type \"!leave\".
+- To leave, type \"\033[101m&lv\033[0m\".
 - Koala is NOT gay.
 - Koala is cute.
 """
@@ -65,22 +64,23 @@ def swap(msg:str, key:int):
 while RUN:
     if FIRST:
         print(WELCOME_MSG)
-        print("loading...")
+        print("Loading...")
         db = load_json()
         if len(db) == 0:
             LIST_BASE = generate_derangements(letters, 17576)
             write_js(LIST_BASE)
         else:
             LIST_BASE = db
-        print("done.\n")
+        print("Done.\n")
         FIRST = False
-    msg = input("Enter your msg:")
-    if msg == "!leave":
+    msg = input("\033[33mEnter your msg:\033[0m")
+    if msg == "&lv":
         print("bye!")
         break
-    key = int(input("Enter your key(0-17575):"))
+    key = int(input("\033[33mEnter your key(0-17575):\033[0m"))
     if key > 17575:
-        print("\033[31mYOU ARE GAY.\033[0m")
+        print("\033[91mYOU ARE GAY.\033[0m")
         continue
-    print(swap(msg, key))
+    print("\033[33m↓Ciphertext↓\033[0m")
+    print(f"{swap(msg.lower(), key)}")
 
