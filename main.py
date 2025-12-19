@@ -1,4 +1,5 @@
 import random
+import json
 
 WELCOME_MSG = """Enigma made by Koala
 
@@ -11,6 +12,18 @@ FIRST = True
 RUN = True
 LIST_BASE = []
 letters = [chr(i) for i in range(ord('a'), ord('z')+1)]
+
+def load_json():
+  with open('db.json', mode='r', encoding="utf8") as jFile:
+      jdata = json.load(jFile)
+  jFile.close()
+  return jdata
+
+def write_js(data):
+  jsdata = json.dumps(data,ensure_ascii=False)
+  with open('db.json', mode='w', encoding="utf8") as jFile:
+    jFile.write(jsdata)
+    jFile.close()
 
 def perfect_swap_shuffle(arr):
     n = len(arr)
@@ -53,9 +66,14 @@ while RUN:
     if FIRST:
         print(WELCOME_MSG)
         print("loading...")
-        LIST_BASE = generate_derangements(letters, 17576)
+        db = load_json()
+        if len(db) == 0:
+            LIST_BASE = generate_derangements(letters, 17576)
+            write_js(LIST_BASE)
+        else:
+            LIST_BASE = db
         print("done.\n")
-    FIRST = False
+        FIRST = False
     msg = input("Enter your msg:")
     if msg == "!leave":
         print("bye!")
