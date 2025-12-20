@@ -7,7 +7,6 @@ Project note:
 - Koala is NOT gay.
 - Koala is cute.
 """
-FIRST = True
 RUN = True
 LIST_BASE = []
 letters = [chr(i) for i in range(ord('a'), ord('z')+1)]
@@ -61,26 +60,25 @@ def swap(msg:str, key:int):
         nmsg += nchar
     return nmsg
 
-while RUN:
-    if FIRST:
-        print(WELCOME_MSG)
-        print("Loading...")
-        db = load_json()
-        if len(db) == 0:
-            LIST_BASE = generate_derangements(letters, 17576)
-            write_js(LIST_BASE)
-        else:
-            LIST_BASE = db
-        print("Done.\n")
-        FIRST = False
-    msg = input("\033[33mEnter your msg:\033[0m")
-    if msg == "&lv":
-        print("bye!")
-        break
-    key = int(input("\033[33mEnter your key(0-17575):\033[0m"))
-    if key > 17575:
-        print("\033[91mYOU ARE GAY.\033[0m")
-        continue
-    print("\033[33m↓Ciphertext↓\033[0m")
-    print(f"{swap(msg.lower(), key)}")
+print(WELCOME_MSG)
+print("Loading...")
+db = load_json()
+if len(db) == 0:
+    LIST_BASE = generate_derangements(letters, 17576)
+    write_js(LIST_BASE)
+else:
+    LIST_BASE = db
+print("Done.\n")
 
+if __name__ == "__main__":
+    while RUN:
+        msg = input("\033[33mEnter your msg:\033[0m")
+        if msg == "&lv":
+            print("bye!")
+            break
+        key = int(input("\033[33mEnter your key(0-17575):\033[0m"))
+        if key > 17575:
+            print("\033[91mYOU ARE GAY.\033[0m")
+            continue
+        print("\033[33m↓Ciphertext↓\033[0m")
+        print(f"{swap(msg.lower(), key)}")
