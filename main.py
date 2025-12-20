@@ -59,18 +59,21 @@ def swap(msg:str, key:int):
             nchar = LIST_BASE[key+i][ord(msg[i])-97]
         nmsg += nchar
     return nmsg
-
-print(WELCOME_MSG)
-print("Loading...")
-db = load_json()
-if len(db) == 0:
-    LIST_BASE = generate_derangements(letters, 17576)
-    write_js(LIST_BASE)
-else:
-    LIST_BASE = db
-print("Done.\n")
+    
+def init():
+    print(WELCOME_MSG)
+    print("Loading...")
+    db = load_json()
+    global LIST_BASE
+    if len(db) == 0:
+        LIST_BASE = generate_derangements(letters, 17576)
+        write_js(LIST_BASE)
+    else:
+        LIST_BASE = db
+    print("Done.\n")
 
 if __name__ == "__main__":
+    init()
     while RUN:
         msg = input("\033[33mEnter your msg:\033[0m")
         if msg == "&lv":
